@@ -4,7 +4,7 @@ const fs = require('fs/promises'); // Node.js File System module with promises
 
 const app = express();
 const port = 3000;
-const dbPath = './data/db.json';
+const dbPath = 'C:\\Users\\Bernard\\Workshop3\\commerce\\Workshop3\\data.json';
 
 app.use(bodyParser.json());
 
