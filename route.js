@@ -105,8 +105,13 @@ app.get('/orders/:userId', (req, res) => {
     const userId = parseInt(req.params.userId);
     const userOrders = orders.filter(order => order.user && order.user.id === userId);
 
-    res.json(userOrders);
+    if (userOrders.length > 0) {
+        res.json(userOrders);
+    } else {
+        res.status(404).json({ error: 'No orders found for the specified user ID' });
+    }
 });
+
 
 // Cart Routes
 
@@ -158,24 +163,13 @@ app.get('/cart/:userId', (req, res) => {
     const userId = parseInt(req.params.userId);
     const userCart = carts.find(cart => cart.userId === userId);
 
-    if (!userCart) {
-        return res.json({ userId, items: [], totalPrice: 0 });
+    if (userCart) {
+        res.json(userCart);
+    } else {
+        res.status(404).json({ error: 'Cart not found for the specified user ID' });
     }
-
-    const cartDetails = {
-        userId,
-        items: userCart.items.map(item => ({
-            ...item,
-            product: products.find(p => p.id === item.productId)
-        })),
-        totalPrice: userCart.items.reduce((total, item) => {
-            const itemProduct = products.find(p => p.id === item.productId);
-            return total + itemProduct.price * item.quantity;
-        }, 0)
-    };
-
-    res.json(cartDetails);
 });
+
 
 app.delete('/cart/:userId/item/:productId', (req, res) => {
     const userId = parseInt(req.params.userId);
