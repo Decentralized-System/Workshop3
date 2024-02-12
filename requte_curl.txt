@@ -1,0 +1,12 @@
+curl -X GET http://localhost:3000/products
+curl -X GET http://localhost:3000/products/1
+curl -X POST -H "Content-Type: application/json" -d '{"name": "New Product", "description": "New Description", "price": 25.99, "category": "New Category", "stock": 15}' http://localhost:3000/products
+curl -X PUT -H "Content-Type: application/json" -d '{"price": 30.99, "stock": 25}' http://localhost:3000/products/1
+curl -X DELETE http://localhost:3000/products/2
+curl -X POST -H "Content-Type: application/json" -d '{"products": [{"productId": 1, "quantity": 2}, {"productId": 2, "quantity": 1}], "user": {"id": 123, "name": "John Doe"}}' http://localhost:3000/orders
+curl -X GET http://localhost:3000/orders/123
+curl -X POST -H "Content-Type: application/json" -d '{"productId": 1, "quantity": 3}' http://localhost:3000/cart/123
+curl -X GET http://localhost:3000/cart/123
+curl -X DELETE http://localhost:3000/cart/123/item/1
+
+

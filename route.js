@@ -4,7 +4,7 @@ const fs = require('fs/promises'); // Node.js File System module with promises
 
 const app = express();
 const port = 3000;
-const dbPath = 'C:\\Users\\Bernard\\Workshop3\\commerce\\Workshop3\\data.json';
+const dbPath = 'C:/Users/Bernard/OneDrive - De Vinci/Desktop/.vs/OneDrive - De Vinci/A4/S8/Decentralization/TD3/Workshop3/data.json';
 
 app.use(bodyParser.json());
 
@@ -41,15 +41,16 @@ app.get('/products/:id', (req, res) => {
     }
 });
 
-app.post('/products', (req, res) => {
+app.post('/products', async (req, res) => {
     const newProduct = req.body;
     newProduct.id = products.length + 1;
     products.push(newProduct);
 
+    await saveDataToFile();
     res.json(newProduct);
 });
 
-app.put('/products/:id', (req, res) => {
+app.put('/products/:id', async (req, res) => {
     const productId = parseInt(req.params.id);
     const updatedProductInfo = req.body;
 
@@ -57,16 +58,18 @@ app.put('/products/:id', (req, res) => {
 
     if (index !== -1) {
         products[index] = { ...products[index], ...updatedProductInfo };
+        await saveDataToFile();
         res.json(products[index]);
     } else {
         res.status(404).json({ error: 'Product not found' });
     }
 });
 
-app.delete('/products/:id', (req, res) => {
+app.delete('/products/:id', async (req, res) => {
     const productId = parseInt(req.params.id);
     products = products.filter(p => p.id !== productId);
 
+    await saveDataToFile();
     res.json({ message: 'Product deleted successfully' });
 });
 
@@ -200,6 +203,11 @@ app.delete('/cart/:userId/item/:productId', (req, res) => {
 
     res.json(updatedCart);
 });
+
+const saveDataToFile = async () => {
+    const dataToSave = { products, orders, carts };
+    await fs.writeFile(dbPath, JSON.stringify(dataToSave, null, 2), 'utf-8');
+};
 
 app.listen(port, () => {
     console.log(`E-commerce server is running on port ${port}`);
