@@ -1,21 +1,72 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs/promises'); 
 
 const app = express();
 const port = 3000;
-<<<<<<< HEAD
-const dbPath = 'C:/Users/Besse/Desktop/ESILV/Année 4/Semestre 2/Decentralization Technologies/Workshop3/data.json';
-=======
 const dbPath = 'C:/Users/Bernard/OneDrive - De Vinci/Desktop/.vs/OneDrive - De Vinci/A4/S8/Decentralization/TD3/Workshop3/data.json';
->>>>>>> c15a8d47f094de1784715ad28f8de9fbc7074bfc
 
 app.use(bodyParser.json());
 
-// Load initial data from the JSON file
-let { products, orders, carts } = require(dbPath);
+const { Sequelize } = require('sequelize');
+const productModel = require('./models/products');
+const orderModel = require('./models/orders');
+const cartModel = require('./models/carts');
+const fs = require('fs');
 
-// Home routes
+const sequelize = new Sequelize({
+    dialect: 'postgres',
+    database: 'db_workshop3',
+    username: 'user_workshop3',
+    password: 'root',
+    host: 'localhost',
+    port: 5432
+});
+
+const Product = productModel(sequelize, Sequelize);
+const Order = orderModel(sequelize, Sequelize);
+const Cart = cartModel(sequelize, Sequelize);
+
+async function insertData() {
+    try {
+        const data = JSON.parse(fs.readFileSync('./data.json', 'utf-8'));
+
+        await Product.bulkCreate(data.products);
+        console.log('Products inserted successfully');
+
+        await Order.bulkCreate(data.orders);
+        console.log('Orders inserted successfully');
+
+        await Cart.bulkCreate(data.carts);
+        console.log('Carts inserted successfully');
+
+    } catch (error) {
+        console.error('Error inserting data:', error);
+    }
+}
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection to the database has been established successfully.');
+
+        // Sync the model with the database to create the table
+        await sequelize.sync();
+
+        console.log('Database synchronized');
+
+        // Insérer les données après la synchronisation des modèles
+        await insertData();
+
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+})();
+
+
+app.set('Product', Product);
+app.set('Order', Order);
+app.set('Cart', Cart);
+
+let { products, orders, carts } = require(dbPath);
 
 app.get('/', (req, res) => {
     // Lire le fichier home.html et le renvoyer en réponse
@@ -30,6 +81,17 @@ app.get('/', (req, res) => {
 });
 
 // Products Routes
+app.get('/', (req, res) => {
+    // Lire le fichier home.html et le renvoyer en rÃ©ponse
+    fs.readFile('home.html', 'utf8')
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            console.error('Error reading home.html:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
 
 app.get('/products', (req, res) => {
     const { category, inStock } = req.query;
