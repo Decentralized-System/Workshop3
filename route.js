@@ -4,7 +4,11 @@ const fs = require('fs/promises'); // Node.js File System module with promises
 
 const app = express();
 const port = 3000;
+<<<<<<< HEAD
 const dbPath = 'C:/Users/Besse/Desktop/ESILV/Année 4/Semestre 2/Decentralization Technologies/Workshop3/data.json';
+=======
+const dbPath = 'C:/Users/Bernard/OneDrive - De Vinci/Desktop/.vs/OneDrive - De Vinci/A4/S8/Decentralization/TD3/Workshop3/data.json';
+>>>>>>> c15a8d47f094de1784715ad28f8de9fbc7074bfc
 
 app.use(bodyParser.json());
 
@@ -55,15 +59,16 @@ app.get('/products/:id', (req, res) => {
     }
 });
 
-app.post('/products', (req, res) => {
+app.post('/products', async (req, res) => {
     const newProduct = req.body;
     newProduct.id = products.length + 1;
     products.push(newProduct);
 
+    await saveDataToFile();
     res.json(newProduct);
 });
 
-app.put('/products/:id', (req, res) => {
+app.put('/products/:id', async (req, res) => {
     const productId = parseInt(req.params.id);
     const updatedProductInfo = req.body;
 
@@ -71,16 +76,18 @@ app.put('/products/:id', (req, res) => {
 
     if (index !== -1) {
         products[index] = { ...products[index], ...updatedProductInfo };
+        await saveDataToFile();
         res.json(products[index]);
     } else {
         res.status(404).json({ error: 'Product not found' });
     }
 });
 
-app.delete('/products/:id', (req, res) => {
+app.delete('/products/:id', async (req, res) => {
     const productId = parseInt(req.params.id);
     products = products.filter(p => p.id !== productId);
 
+    await saveDataToFile();
     res.json({ message: 'Product deleted successfully' });
 });
 
@@ -116,8 +123,13 @@ app.get('/orders/:userId', (req, res) => {
     const userId = parseInt(req.params.userId);
     const userOrders = orders.filter(order => order.user && order.user.id === userId);
 
-    res.json(userOrders);
+    if (userOrders.length > 0) {
+        res.json(userOrders);
+    } else {
+        res.status(404).json({ error: 'No orders found for the specified user ID' });
+    }
 });
+
 
 // Cart Routes
 
@@ -169,24 +181,13 @@ app.get('/cart/:userId', (req, res) => {
     const userId = parseInt(req.params.userId);
     const userCart = carts.find(cart => cart.userId === userId);
 
-    if (!userCart) {
-        return res.json({ userId, items: [], totalPrice: 0 });
+    if (userCart) {
+        res.json(userCart);
+    } else {
+        res.status(404).json({ error: 'Cart not found for the specified user ID' });
     }
-
-    const cartDetails = {
-        userId,
-        items: userCart.items.map(item => ({
-            ...item,
-            product: products.find(p => p.id === item.productId)
-        })),
-        totalPrice: userCart.items.reduce((total, item) => {
-            const itemProduct = products.find(p => p.id === item.productId);
-            return total + itemProduct.price * item.quantity;
-        }, 0)
-    };
-
-    res.json(cartDetails);
 });
+
 
 app.delete('/cart/:userId/item/:productId', (req, res) => {
     const userId = parseInt(req.params.userId);
@@ -214,6 +215,11 @@ app.delete('/cart/:userId/item/:productId', (req, res) => {
 
     res.json(updatedCart);
 });
+
+const saveDataToFile = async () => {
+    const dataToSave = { products, orders, carts };
+    await fs.writeFile(dbPath, JSON.stringify(dataToSave, null, 2), 'utf-8');
+};
 
 app.listen(port, () => {
     console.log(`E-commerce server is running on port ${port}`);

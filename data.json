@@ -1,8 +1,68 @@
 {
   "products": [
-    { "id": 1, "name": "Product 1", "description": "Description 1", "price": 19.99, "category": "Electronics", "stock": 10 },
-    { "id": 2, "name": "Product 2", "description": "Description 2", "price": 29.99, "category": "Clothing", "stock": 20 }
+    {
+      "id": 1,
+      "name": "Product 1",
+      "description": "Description for Product 1",
+      "price": 19.99,
+      "category": "Category A",
+      "stock": 10
+    },
+    {
+      "id": 2,
+      "name": "Product 2",
+      "description": "Description for Product 2",
+      "price": 29.99,
+      "category": "Category B",
+      "stock": 5
+    },
+    {
+      "id": 3,
+      "name": "Product 3",
+      "description": "Description for Product 3",
+      "price": 39.99,
+      "category": "Category A",
+      "stock": 15
+    }
   ],
-  "orders": [],
-  "carts": []
+  "orders": [
+    {
+      "id": 1,
+      "products": [
+        {"productId": 1, "quantity": 2},
+        {"productId": 3, "quantity": 1}
+      ],
+      "user": {
+        "id": 123,
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    },
+    {
+      "id": 2,
+      "products": [
+        {"productId": 2, "quantity": 1}
+      ],
+      "user": {
+        "id": 456,
+        "name": "Jane Smith",
+        "email": "jane@example.com"
+      }
+    }
+  ],
+  "carts": [
+    {
+      "userId": 123,
+      "items": [
+        {"productId": 1, "quantity": 1},
+        {"productId": 3, "quantity": 2}
+      ]
+    },
+    {
+      "userId": 456,
+      "items": [
+        {"productId": 2, "quantity": 3}
+      ]
+    }
+  ]
 }
