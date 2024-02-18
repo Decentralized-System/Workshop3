@@ -4,12 +4,30 @@ const fs = require('fs/promises');
 
 const app = express();
 const port = 3000;
+<<<<<<< HEAD
+const dbPath = 'C:/Users/Besse/Desktop/ESILV/Année 4/Semestre 2/Decentralization Technologies/Workshop3/data.json';
+=======
 const dbPath = 'C:/Users/Bernard/OneDrive - De Vinci/Desktop/.vs/OneDrive - De Vinci/A4/S8/Decentralization/TD3/Workshop3/data.json';
+>>>>>>> c15a8d47f094de1784715ad28f8de9fbc7074bfc
 
 app.use(bodyParser.json());
 
 // Load initial data from the JSON file
 let { products, orders, carts } = require(dbPath);
+
+// Home routes
+
+app.get('/', (req, res) => {
+    // Lire le fichier home.html et le renvoyer en réponse
+    fs.readFile('home.html', 'utf8')
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            console.error('Error reading home.html:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
 
 // Products Routes
 
