@@ -1,0 +1,12 @@
+http://localhost:3000/products
+http://localhost:3000/products/:id
+http://localhost:3000/orders/:userId
+http://localhost:3000/cart/:userId
+http://localhost:3000/products
+http://localhost:3000/orders
+http://localhost:3000/cart/:userId
+http://localhost:3000/products/:id
+http://localhost:3000/products/:id
+http://localhost:3000/cart/:userId/item/:productId
+
+

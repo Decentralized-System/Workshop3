@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Endpoint Forms</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Add more styles as needed */
+    </style>
+</head>
+<body>
+
+    <h1>Products Routes</h1>
+
+    <form action="/products" method="GET">
+        <label>GET /products</label>
+        <button type="submit">Retrieve Products</button>
+    </form>
+
+    <form action="/products/1" method="GET">
+        <label>GET /products/:id</label>
+        <button type="submit">Fetch Product by ID</button>
+    </form>
+
+    <form action="/products" method="POST">
+        <label>POST /products</label>
+        <!-- Include input fields for the product information -->
+        <button type="submit">Add New Product</button>
+    </form>
+
+    <form action="/products/1" method="PUT">
+        <label>PUT /products/:id</label>
+        <!-- Include input fields for the updated product information -->
+        <button type="submit">Update Product by ID</button>
+    </form>
+
+    <form action="/products/1" method="DELETE">
+        <label>DELETE /products/:id</label>
+        <button type="submit">Delete Product by ID</button>
+    </form>
+
+    <h1>Orders Routes</h1>
+
+    <form action="/orders" method="POST">
+        <label>POST /orders</label>
+        <!-- Include input fields for order creation -->
+        <button type="submit">Create New Order</button>
+    </form>
+
+    <form action="/orders/1" method="GET">
+        <label>GET /orders/:userId</label>
+        <button type="submit">Retrieve User Orders</button>
+    </form>
+
+    <h1>Cart Routes</h1>
+
+    <form action="/cart/1" method="POST">
+        <label>POST /cart/:userId</label>
+        <!-- Include input fields for adding a product to the cart -->
+        <button type="submit">Add to Cart</button>
+    </form>
+
+    <form action="/cart/1" method="GET">
+        <label>GET /cart/:userId</label>
+        <button type="submit">Retrieve Cart</button>
+    </form>
+
+    <form action="/cart/789/item/456" method="DELETE">
+        <label>DELETE /cart/:userId/item/:productId</label>
+        <button type="submit">Remove Item from Cart</button>
+    </form>
+
+</body>
+</html>
