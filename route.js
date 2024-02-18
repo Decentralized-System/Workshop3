@@ -4,12 +4,26 @@ const fs = require('fs/promises'); // Node.js File System module with promises
 
 const app = express();
 const port = 3000;
-const dbPath = 'C:\\Users\\Bernard\\Workshop3\\commerce\\Workshop3\\data.json';
+const dbPath = 'C:/Users/Besse/Desktop/ESILV/Année 4/Semestre 2/Decentralization Technologies/Workshop3/data.json';
 
 app.use(bodyParser.json());
 
 // Load initial data from the JSON file
 let { products, orders, carts } = require(dbPath);
+
+// Home routes
+
+app.get('/', (req, res) => {
+    // Lire le fichier home.html et le renvoyer en réponse
+    fs.readFile('home.html', 'utf8')
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            console.error('Error reading home.html:', error);
+            res.status(500).send('Internal Server Error');
+        });
+});
 
 // Products Routes
 
