@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs/promises'); // Node.js File System module with promises
+const fs = require('fs/promises'); 
 
 const app = express();
 const port = 3000;
@@ -131,7 +131,7 @@ app.post('/cart/:userId', (req, res) => {
 
     let userCart = carts.find(cart => cart.userId === userId);
 
-    if (!userCart) {
+    if (!userCart) {0
         userCart = { userId, items: [] };
         carts.push(userCart);
     }
