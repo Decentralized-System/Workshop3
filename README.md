@@ -16,22 +16,6 @@ Participants should form groups of 3 to 5 and select a simple dataset, such as I
 
 **Q1:** Develop diverse predictive models targeting the selected dataset. Each group member should create a distinct model.
 
-<details>
-    <summary>💡 Basic flask app</summary>
-    ```python
-        from flask import Flask
-        app = Flask(__name__)
-        
-        @app.route('/')
-        def hello_world():
-            return 'Hello, World!'
-        
-        
-        
-        app.run(host="0.0.0.0")
-    ```
-</details>
-
 - Evaluate the accuracy and performance of your model.
 - Adapt your model for API access. This API should include a GET `predict` route that accepts model arguments and returns a prediction.
 - Determine a standardized API response format within your group.
@@ -42,9 +26,9 @@ This stage illustrates the creation of a distributed prediction system in a trus
 
 ### Introducing Consensus with Slashing Mechanism
 
-**Q3:** Introduce a weighting system to refine the meta-model's predictions. Weights, ranging from 0 to 1, are adjusted with each prediction batch to reflect the accuracy of individual models relative to the group consensus.
+**Q4:** Introduce a weighting system to refine the meta-model's predictions. Weights, ranging from 0 to 1, are adjusted with each prediction batch to reflect the accuracy of individual models relative to the group consensus.
 
-**Q4:** Implement a proof-of-stake consensus mechanism with a slashing protocol. Models must make an initial deposit (e.g., 1000 euros) upon registration to participate. This deposit serves as a security measure, ensuring participants' commitment to the network's integrity.
+**Q5:** Implement a proof-of-stake consensus mechanism with a slashing protocol. Models must make an initial deposit (e.g., 1000 euros) upon registration to participate. This deposit serves as a security measure, ensuring participants' commitment to the network's integrity.
 
 - Implement penalties (slashing) for actions that undermine network accuracy or trustworthiness. For example, consistently inaccurate predictions may result in a loss of deposit.
 - This protocol discourages adverse behaviors while encouraging contributions of accurate, reliable predictions.
@@ -175,11 +159,6 @@ Asynchronous replication ensures redundancy by periodically copying data from th
 Asynchronous replication employs a queue or buffer system. Once the primary storage acknowledges the write, the data is queued for replication. Advanced systems may implement algorithms to batch data, minimize network chatter, or prioritize data sequences. Change logs may be utilized to keep track of data states at specific intervals, allowing for periodic synchronization with secondary storage. This approach is especially prevalent in geographically dispersed disaster recovery architectures, where data is asynchronously replicated to remote sites.
 
 Q8 - Adapt the implementation to use asynchronous replication. Do the implementation in a new folder named `Asynchronous-Replication`.
-
-
-Q7-bis: implement synchronous mirroring using two differents database structures
-
-Q8-bis: implement asynchronous replication using two different database structure
 
 ---
 

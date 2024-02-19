@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Prediction Result</h2>
+
+    <p>Predicted Class: {{ predicted }}</p>
+    <p>Probability: {{ probability }}</p>
+
+    <h3>Class Probabilities</h3>
+    <ul>
+        {% for prob in probalities %}
+            <li>{{ prob }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

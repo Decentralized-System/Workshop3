@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Prediction</title>
+</head>
+
+<body>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+
+    <h1>Welcome to Flask Prediction</h1>
+
+    <form action="/predict/" method="get">
+        <label for="L1">L1:</label>
+        <input type="text" name="L1" required><br>
+
+        <label for="W1">W1:</label>
+        <input type="text" name="W1" required><br>
+
+        <label for="L2">L2:</label>
+        <input type="text" name="L2" required><br>
+
+        <label for="W2">W2:</label>
+        <input type="text" name="W2" required><br>
+
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
