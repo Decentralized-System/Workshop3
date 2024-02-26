@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <div>
+    <h1 class="container my-3 text-center">Product's Details</h1>
+  </div>
+  <div class="col-md-5">
+    <h2 id="name">{{ product.name }}</h2>
+    <p id="desc"><strong>Description:</strong> {{ product.description }}</p>
+    <p id="category"><strong>Category:</strong> {{ product.category }}</p>
+    <p id="price"><strong>Price:</strong> {{ product.price }}</p>
+    <p id="quantity"><strong>Quantity available:</strong> {{ product.quantity }}</p>
+  </div>
+
+  <div>
+    <h2 class="text-center display-6 fst-italic">add product to cart</h2>
+  </div>
+  <div class="col-md-5">
+    <form [formGroup]="quantForm">
+      <label for="numericFieldMin" class="mb-1">Quantity </label>
+      <input type="number" class="form-control" id="numericFieldMin" name="numericFieldMin" formControlName="quantity">
+      <div class="text-center">
+        <p *ngIf="quantForm.invalid" class="text-danger"> Please fill out all required fields.</p>
+        <button type="button" class="btn btn-dark" (click)="addToCart()" [disabled]="!quantForm.valid" >add to cart</button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    <h2 class="text-center display-6 fst-italic">modify product</h2>
+    <form [formGroup]="productForm">
+      <label for="newProductName">Nom du produit:</label>
+      <input type="text" id="newProductName" name="newProductName" class="form-control" formControlName="name">
+
+      <label for="newProductDescription">Description:</label>
+      <input type="text" id="newProductDescription" name="newProductDescription" class="form-control" formControlName="description" >
+
+      <label for="newProductCategory">Category:</label>
+      <input type="text" id="newProductCategory" name="newProductCategory" class="form-control" formControlName="category">
+
+      <label for="newProductPrice">Prix:</label>
+      <input type="number" id="newProductPrice" name="newProductPrice" class="form-control" formControlName="price">
+
+      <label for="newProductQuantity">Quantity:</label>
+      <input type="number" id="newProductQuantity" name="newProductQuantity" class="form-control" formControlName="quantity">
+
+      <div class="text-center">
+        <p *ngIf="productForm.invalid" class="text-danger"> Please fill out all required fields.</p>
+        <button type="button" class="btn btn-dark" (click)="modifyProduct()" [disabled]="!productForm.valid" >Modify Product</button>
+      </div>
+    </form>
+  </div>
+</div>

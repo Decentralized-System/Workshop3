@@ -1,0 +1,23 @@
+<div *ngIf="emptyOrderDetails">
+  <p>Your order details are empty at the moment.</p>
+</div>
+
+<div *ngIf="!emptyOrderDetails">
+  <h2>Your Order Details</h2>
+  <ul>
+    <li *ngFor="let order of orders">
+      <h3>Order ID: {{ order.orderId }}</h3>
+      <p>Total Price: ${{ order.totalPrice }}</p>
+      <h4>Order Items:</h4>
+      <ul>
+        <li *ngFor="let orderItem of order.orderDetails">
+          <p>Product ID: {{ orderItem.productId }}</p>
+          <p>Name: {{ orderItem.name }}</p>
+          <p>Quantity: {{ orderItem.quantity }}</p>
+          <p>Price: ${{ orderItem.price }}</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+

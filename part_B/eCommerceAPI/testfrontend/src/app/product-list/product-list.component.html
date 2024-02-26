@@ -1,0 +1,39 @@
+<p style="font-size: 24px; text-align: center;">All products</p>
+
+<div *ngIf="emptyProductList">
+  <p>Aucun produit n'est disponible pour le moment.</p>
+</div>
+
+<div *ngIf="!emptyProductList">
+  <ul>
+    <li *ngFor="let product of products">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p>Prix: {{ product.price }}</p>
+      <button (click)="productDetail(product.productId)">see product's details</button>
+      <button (click)="deleteProduct(product.productId)">remove</button>
+    </li>
+  </ul>
+</div>
+
+<form [formGroup]="productForm">
+  <label for="newProductName">Nom du produit:</label>
+  <input type="text" id="newProductName" name="newProductName" class="form-control" formControlName="name">
+
+  <label for="newProductDescription">Description:</label>
+  <input type="text" id="newProductDescription" name="newProductDescription" class="form-control" formControlName="description" >
+
+  <label for="newProductCategory">Category:</label>
+  <input type="text" id="newProductCategory" name="newProductCategory" class="form-control" formControlName="category">
+
+  <label for="newProductPrice">Prix:</label>
+  <input type="number" id="newProductPrice" name="newProductPrice" class="form-control" formControlName="price">
+
+  <label for="newProductQuantity">Quantity:</label>
+  <input type="number" id="newProductQuantity" name="newProductQuantity" class="form-control" formControlName="quantity">
+
+  <div class="text-center">
+    <p *ngIf="productForm.invalid" class="text-danger"> Please fill out all required fields.</p>
+    <button type="button" class="btn btn-dark" (click)="addProduct()" [disabled]="!productForm.valid" >Create Product</button>
+  </div>
+</form>

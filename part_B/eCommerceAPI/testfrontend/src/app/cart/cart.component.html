@@ -1,0 +1,18 @@
+<div *ngIf="emptyCartList">
+  <h2>Your cart is empty</h2>
+</div>
+
+<div *ngIf="!emptyCartList">
+  <h2>Your Cart</h2>
+  <ul>
+    <li *ngFor="let cartItem of carts">
+      <p>Product ID: {{ cartItem.productId }}</p>
+      <p>Product name : {{ cartItem.name }}</p>
+      <p>Product price: {{ cartItem.price }}</p>
+      <p>Quantity: {{ cartItem.quantity }}</p>
+      <button (click)="deleteCart(cartItem.productId, 1)">remove</button>
+    </li>
+  </ul>
+  <h3>total price: {{ totalPrice }} €</h3>
+  <button (click)="purchaseCart(userId)">purchase cart</button>
+</div>
